@@ -5,7 +5,7 @@ type RelatedSearchProps = {
   search: string;
   companies: Company[];
   loading: boolean;
-  onCompanyClick: (domain: string) => void;
+  onCompanyClick: (domain: string, name: string) => void;
 };
 
 const RelatedSearch = ({
@@ -14,13 +14,13 @@ const RelatedSearch = ({
   loading,
   onCompanyClick,
 }: RelatedSearchProps) => {
-  const error = false;
+  const testError = false;
   return (
     <Box mt="10px">
       {loading ? (
         <Text>Loading...</Text>
-      ) : error ? (
-        <Text color="red.500">{error}</Text>
+      ) : testError ? (
+        <Text color="red.500">An unknown error occured</Text>
       ) : companies.length > 0 ? (
         <Box>
           <Box>
@@ -37,7 +37,7 @@ const RelatedSearch = ({
                 color={"white"}
                 px={"20px"}
                 py={"10px"}
-                onClick={() => onCompanyClick(each.domain)}
+                onClick={() => onCompanyClick(each.domain, each.name)}
               >
                 <Text wordBreak={"break-word"} key={each.domain}>
                   {each.name}

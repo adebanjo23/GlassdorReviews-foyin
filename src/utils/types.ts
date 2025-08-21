@@ -10,6 +10,7 @@ export type CompanySearchResponse = {
 };
 
 export type Review = {
+  review_id: string
   review_title: string;
   review_text: string;
   consumer_name: number;

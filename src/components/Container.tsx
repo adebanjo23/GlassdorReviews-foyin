@@ -7,9 +7,9 @@ const Container = ({ children, ...rest }: BoxProps) => {
       maxW={"1512px"}
       mx={"auto"}
       p={{
-        base: "0 1.25rem",
-        sm: "0 2.1875rem",
-        md: "0 3.125rem",
+        base: "20px 1.25rem",
+        sm: "20px 2.1875rem",
+        md: "20px 3.125rem",
       }}
       {...rest}
     >

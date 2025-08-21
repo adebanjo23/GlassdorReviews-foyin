@@ -17,13 +17,12 @@ const Home = () => {
   const [search, setSearch] = useState("");
 
   const [searching, setSearching] = useState(false);
-  const [searchingError, setSearchingError] = useState(null);
 
+  const [company, setCompany] = useState("");
   const [companies, setCompanies] = useState<Company[]>([]);
 
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loadingReviews, setLoadingReviews] = useState(false);
-  const [errorReviews, setErrorReviews] = useState(false);
 
   useEffect(() => {
     if (!search.trim()) return;
@@ -70,7 +69,7 @@ const Home = () => {
     };
   }, [search]);
 
-  const fetchReviews = async (domain: string) => {
+  const fetchReviews = async (domain: string, name: string) => {
     setSearch("");
     setLoadingReviews(true);
     try {
@@ -90,12 +89,15 @@ const Home = () => {
       };
 
       const { data } = await axios.request<CompanyReviews>(options);
+      console.log(data);
       const reviews = data.data.reviews.map((r) => ({
+        review_id: r.review_id,
         review_title: r.review_title,
         review_text: r.review_text,
         consumer_name: r.consumer_name,
       }));
       setReviews(reviews);
+      setCompany(name);
     } catch (error) {
       console.error(error);
     } finally {
@@ -103,9 +105,11 @@ const Home = () => {
     }
   };
 
+  const testError = false;
+
   return (
     <Container>
-      <Box display={"flex"} justifyContent={"center"} py={"20px"}>
+      <Box display={"flex"} justifyContent={"center"}>
         <Box width={"100%"} maxW={"500px"} h={"50px"}>
           <Search search={search} setSearch={setSearch} />
           {search && (
@@ -118,17 +122,22 @@ const Home = () => {
           )}
         </Box>
       </Box>
-      <Box mt={"20px"}>
-        {loadingReviews && <Text>Loading Reviws</Text>}
-        {!loadingReviews && (
-          <SimpleGrid
-            columns={{ base: 1, md: 2, lg: 4 }}
-            gap={"20px"}
-          >
-            {reviews.map((each) => (
-              <ReviewCard review={each} />
-            ))}
-          </SimpleGrid>
+      <Box mt={"30px"}>
+        {loadingReviews ? (
+          <Text>Loading Reviews</Text>
+        ) : testError ? (
+          <Text color="red.500">An unknown error occured</Text>
+        ) : reviews.length > 0 ? (
+          <Box>
+            Reviews for: {company}
+            <SimpleGrid mt={"10px"} columns={{ base: 1, md: 2, lg: 4 }} gap={"20px"}>
+              {reviews.map((each) => (
+                <ReviewCard key={each.review_id} review={each} />
+              ))}
+            </SimpleGrid>
+          </Box>
+        ) : (
+          <Text>No reviews</Text>
         )}
       </Box>
     </Container>
