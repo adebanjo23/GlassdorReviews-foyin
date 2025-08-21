@@ -8,11 +8,12 @@ type SearchProps = {
 const Search = ({ search, setSearch }: SearchProps) => {
   return (
     <Input
-      h={"100%"}
+      h={"50px"}
       bg={"rgb(0,0,0,0.1)"}
       placeholder="Search Companies"
       px={"20px"}
       value={search}
+      
       onChange={(e) => setSearch(e.target.value)}
     />
   );

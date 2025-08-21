@@ -110,7 +110,7 @@ const Home = () => {
   return (
     <Container>
       <Box display={"flex"} justifyContent={"center"}>
-        <Box width={"100%"} maxW={"500px"} h={"50px"}>
+        <Box width={"100%"} maxW={"500px"}>
           <Search search={search} setSearch={setSearch} />
           {search && (
             <RelatedSearch
